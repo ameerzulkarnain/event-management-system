@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>RedTix Event Management</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -45,7 +45,7 @@
             }
 
             .title {
-                font-size: 84px;
+                font-size: 40px;
             }
 
             .links > a {
@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    RedTix Event Management
                 </div>
 
                 <div class="links">

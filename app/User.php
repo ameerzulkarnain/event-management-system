@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'first_name', 'last_name', 'company_id',
     ];
 
     /**
@@ -24,16 +24,25 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    // protected $hidden = [
+    //     'password', 'remember_token',
+    // ];
 
     /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    // protected $casts = [
+    //     'email_verified_at' => 'datetime',
+    // ];
+    public function eventParticipant()
+    {
+        return $this->hasMany('App\Models\EventParticipant')->withDefault();
+    }
+
+    public function company()
+    {
+        return $this->belongsTo('App\Models\Companies')->withDefault();
+    }
 }
