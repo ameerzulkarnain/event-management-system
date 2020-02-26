@@ -4,7 +4,6 @@
 
 ## Installation
 1. composer install
-2. composer require laravel/passport
-3. php artisan migrate
-4. php artisan passport:install
-5. php artisan db:seed
+2. php artisan key:generate
+2. php artisan migrate
+3. php artisan db:seed

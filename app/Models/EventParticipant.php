@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Auth;
 
-class Companies extends Model
+class EventParticipant extends Model
 {
 
-    protected $table = 'companies';
+    protected $table = 'event_participants';
 
     // Primary Key
     public $primaryKey = 'id';
@@ -17,11 +17,16 @@ class Companies extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'name'
+        'event_id', 'user_id'
     ];
 
     public function user()
     {
-        return $this->hasMany('App\User');
+        return $this->belongsTo('App\User');
+    }
+
+    public function event()
+    {
+        return $this->belongsTo('App\Models\Event');
     }
 }

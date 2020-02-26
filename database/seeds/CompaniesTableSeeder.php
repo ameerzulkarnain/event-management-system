@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\Companies;
+use App\Models\Company;
 use Faker\Factory as Faker;
 
 class CompaniesTableSeeder extends Seeder
@@ -15,7 +15,7 @@ class CompaniesTableSeeder extends Seeder
     {
         $faker = Faker::create();
     	foreach (range(1,10) as $index) {
-	        Companies::create([
+	        Company::create([
 	            'name' => $faker->company,
 	        ]);
 	    }

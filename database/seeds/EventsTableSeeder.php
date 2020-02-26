@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 
 use Faker\Factory as Faker;
-use App\Models\Events;
+use App\Models\Event;
 
 class EventsTableSeeder extends Seeder
 {
@@ -16,8 +16,10 @@ class EventsTableSeeder extends Seeder
     {
         $faker = Faker::create();
     	foreach (range(1,10) as $index) {
-	        Events::create([
-	            'name' => $faker->catchPhrase,
+	        Event::create([
+                'name' => $faker->catchPhrase,
+                'location' => $faker->city,
+                'date' => $faker->date($format = 'Y-m-d', $min = 'now'),
 	        ]);
 	    }
     }

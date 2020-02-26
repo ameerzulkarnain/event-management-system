@@ -38,11 +38,11 @@ class User extends Authenticatable
     // ];
     public function eventParticipant()
     {
-        return $this->hasMany('App\Models\EventParticipant')->withDefault();
+        return $this->hasMany('App\Models\EventParticipant');
     }
 
     public function company()
     {
-        return $this->belongsTo('App\Models\Companies')->withDefault();
+        return $this->belongsTo('App\Models\Company')->withDefault();
     }
 }

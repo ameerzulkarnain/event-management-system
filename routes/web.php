@@ -16,3 +16,10 @@ Route::get('/', function () {
 });
 
 Route::resource('user', 'UserController');
+Route::delete('/user/event/{event_id}', 'UserController@deleteUserEvent');
+
+Route::get('/event', 'EventController@showEvent');
+Route::get('/event/{event_id}/detail', 'EventController@getEventDetail');
+
+Route::get('/company', 'CompanyController@showCompany');
+Route::get('/company/{company_id}/detail', 'CompanyController@getCompanyDetail');

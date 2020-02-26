@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Events;
-use App\Models\Companies;
-use App\Models\EventParticipants;
+use App\Models\Event;
+use App\Models\Company;
+use App\Models\EventParticipant;
 use App\User;
 
 class UserController extends Controller
@@ -29,8 +29,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        $companies = Companies::all();
-        $events = Events::all();
+        $companies = Company::all();
+        $events = Event::all();
 
         return view('user.create',['companies' => $companies, 'events' => $events]);
     }
@@ -57,7 +57,7 @@ class UserController extends Controller
 
         if(isset($request->event_id)) {
             foreach($request->event_id as $event_id) {
-                $eventParticipant = EventParticipants::create([
+                $eventParticipant = EventParticipant::create([
                     'event_id'  => $event_id,
                     'user_id'   => $user->id
                 ]);
@@ -87,10 +87,10 @@ class UserController extends Controller
      */
     public function edit($user_id)
     {
-        $companies = Companies::all();
-        $events = Events::all();
+        $companies = Company::all();
+        $events = Event::all();
         $user = User::find($user_id);
-        $userEvents = EventParticipants::where('user_id', $user_id)->pluck('event_id');
+        $userEvents = EventParticipant::where('user_id', $user_id)->pluck('event_id');
 
         return view('user.edit',['user' => $user, 'companies' => $companies, 'events' => $events, 'userEvents' => $userEvents]);
     }
@@ -119,7 +119,7 @@ class UserController extends Controller
 
         if(isset($request->event_id)) {
             foreach($request->event_id as $event_id) {
-                $eventParticipant = EventParticipants::create([
+                $eventParticipant = EventParticipant::create([
                     'event_id'  => $event_id,
                     'user_id'   => $user_id
                 ]);
@@ -136,8 +136,25 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($user_id)
     {
-        //
+        $user = User::find($user_id);
+
+        foreach($user->eventParticipant as $eventParticipant) {
+            EventParticipant::find($eventParticipant->id)->delete();
+        }
+
+        $user->delete();
+
+        return redirect()->route('user.index')
+            ->with('success','Event removed successfully');
+    }
+
+    public function deleteUserEvent($eventParticipant_id)
+    {
+        EventParticipant::find($eventParticipant_id)->delete();
+
+        return redirect()->route('user.index')
+            ->with('success','Event removed successfully');
     }
 }

@@ -45,7 +45,13 @@
                             <!-- Authentication Links -->
                             @guest
                             <a class="navbar-brand" href="{{ url('/user') }}">
-                                Dashboard
+                                User
+                            </a>
+                            <a class="navbar-brand" href="{{ url('/company') }}">
+                                Company
+                            </a>
+                            <a class="navbar-brand" href="{{ url('/event') }}">
+                                Event
                             </a>
                             {{-- @if (Route::has('register'))
                             <li class="nav-item">

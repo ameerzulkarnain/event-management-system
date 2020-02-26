@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Auth;
 
-class Events extends Model
+class Event extends Model
 {
 
     protected $table = 'events';
@@ -17,11 +17,11 @@ class Events extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'name'
+        'name','location','date'
     ];
 
     public function eventParticipant()
     {
-        return $this->hasMany('App\Models\EventParticipants');
+        return $this->hasMany('App\Models\EventParticipant');
     }
 }
