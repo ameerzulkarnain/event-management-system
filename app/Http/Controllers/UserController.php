@@ -85,13 +85,14 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($user_id)
     {
         $companies = Companies::all();
         $events = Events::all();
-        $user = User::find($id);
+        $user = User::find($user_id);
+        $userEvents = EventParticipants::where('user_id', $user_id)->pluck('event_id');
 
-        return view('user.edit',['user' => $user, 'companies' => $companies, 'events' => $events]);
+        return view('user.edit',['user' => $user, 'companies' => $companies, 'events' => $events, 'userEvents' => $userEvents]);
     }
 
     /**
@@ -101,9 +102,32 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $user_id)
     {
-        //
+        $this->validate($request, [
+            'first_name' => 'required|max:255',
+            'last_name' => 'required|max:255',
+            'company_id' => 'required',
+        ]);
+
+        $user = User::find($user_id)
+            ->update([
+                'first_name'    => $request->first_name,
+                'last_name'     => $request->last_name,
+                'company_id'    => $request->company_id,
+            ]);
+
+        if(isset($request->event_id)) {
+            foreach($request->event_id as $event_id) {
+                $eventParticipant = EventParticipants::create([
+                    'event_id'  => $event_id,
+                    'user_id'   => $user_id
+                ]);
+            }
+        }
+
+        return redirect()->route('user.index')
+            ->with('success','User edit successfully');
     }
 
     /**

@@ -31,7 +31,7 @@
 
                         <div class="col-sm-9">
                             <input id="first_name" type="text" class="form-control" name="first_name"
-                                value="{{ old('first_name') }}"
+                                value="{{ $user->first_name }}"
                                 required autofocus>
 
                             @if ($errors->has('first_name'))
@@ -46,7 +46,7 @@
 
                         <div class="col-sm-9">
                             <input id="last_name" type="text" class="form-control" name="last_name"
-                                value="{{ old('last_name') }}"
+                                value="{{ $user->last_name }}"
                                 required autofocus>
 
                             @if ($errors->has('last_name'))
@@ -63,7 +63,11 @@
                             <select id="company" class="form-control" name="company_id" required>
                                 <option disabled selected value> -- Select a company -- </option>
                                 @foreach ($companies as $company)
+                                @if ($user->company_id == $company->id)
+                                    <option selected value={{$company->id}}> {{$company->name}} </option>
+                                @else
                                     <option value={{$company->id}}> {{$company->name}} </option>
+                                @endif
                                 @endforeach
                             </select>
 
@@ -77,7 +81,12 @@
                     <div class="col-sm-3">Events</div>
                     <div class="col-sm-9 form-check">
                         @foreach ($events as $event)
-                            <input class="form-check-input" type="checkbox" name="event_id[]" value="{{$event->id}}" id="{{$event->id}}">
+                            @if (in_array($event->id, $userEvents->toArray()))
+                                <input class="form-check-input" type="checkbox" name="event_id[]" value="{{$event->id}}" id="{{$event->id}}" checked disabled>
+                            @else
+                                <input class="form-check-input" type="checkbox" name="event_id[]" value="{{$event->id}}" id="{{$event->id}}">
+                            @endif
+
                             <label class="form-check-label" for="event_id[]">
                                 {{$event->name}}
                             </label>
